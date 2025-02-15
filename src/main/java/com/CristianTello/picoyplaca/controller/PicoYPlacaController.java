@@ -17,6 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 @Validated
+@CrossOrigin(origins = "http://localhost:3000")
 public class PicoYPlacaController {
 
     private final IServicePicoYPlaca picoYPlacaService;
