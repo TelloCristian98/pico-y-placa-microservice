@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend  # Path to your backend Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      # Adjust these environment variables to match your application's configuration
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/pico_placa_db
+      - SPRING_DATASOURCE_USERNAME=pico_user
+      - SPRING_DATASOURCE_PASSWORD=secure_password
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend  # Path to your frontend Dockerfile
+    ports:
+      - "3000:80"  # Maps container's port 80 (Nginx) to host port 3000
+
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_DB: pico_placa_db
+      POSTGRES_USER: pico_user
+      POSTGRES_PASSWORD: secure_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
