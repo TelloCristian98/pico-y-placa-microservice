@@ -1,16 +1,11 @@
 package com.CristianTello.picoyplaca.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalTime;
 import java.util.List;
 
 @Entity
 @Table(name = "pico_placa_rules")
-@Data
-@NoArgsConstructor
 public class PicoPlacaRule {
 
     @Id
@@ -27,4 +22,52 @@ public class PicoPlacaRule {
     private LocalTime morningEnd;
     private LocalTime eveningStart;
     private LocalTime eveningEnd;
+
+    public String getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
+    public List<Integer> getRestrictedDigits() {
+        return restrictedDigits;
+    }
+
+    public void setRestrictedDigits(List<Integer> restrictedDigits) {
+        this.restrictedDigits = restrictedDigits;
+    }
+
+    public LocalTime getMorningStart() {
+        return morningStart;
+    }
+
+    public void setMorningStart(LocalTime morningStart) {
+        this.morningStart = morningStart;
+    }
+
+    public LocalTime getMorningEnd() {
+        return morningEnd;
+    }
+
+    public void setMorningEnd(LocalTime morningEnd) {
+        this.morningEnd = morningEnd;
+    }
+
+    public LocalTime getEveningStart() {
+        return eveningStart;
+    }
+
+    public void setEveningStart(LocalTime eveningStart) {
+        this.eveningStart = eveningStart;
+    }
+
+    public LocalTime getEveningEnd() {
+        return eveningEnd;
+    }
+
+    public void setEveningEnd(LocalTime eveningEnd) {
+        this.eveningEnd = eveningEnd;
+    }
 }

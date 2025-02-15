@@ -1,9 +1,9 @@
 package com.CristianTello.picoyplaca.controller;
 
-import com.CristianTello.picoyplaca.service.PicoYPlacaService;
+import com.CristianTello.picoyplaca.service.IServicePicoYPlaca;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,21 +19,27 @@ import java.util.Map;
 @Validated
 public class PicoYPlacaController {
 
-    private final PicoYPlacaService picoYPlacaService;
+    private final IServicePicoYPlaca picoYPlacaService;
 
-    @Autowired
-    public PicoYPlacaController(PicoYPlacaService picoYPlacaService) {
+    public PicoYPlacaController(IServicePicoYPlaca picoYPlacaService) {
         this.picoYPlacaService = picoYPlacaService;
     }
 
     @GetMapping("/check")
     public ResponseEntity<Map<String, Object>> checkPicoYPlaca(
-            @RequestParam @NotBlank(message = "License plate is required")
-            @Pattern(regexp = "^[A-Z]{3}-\\d{4}$", message = "License plate must be like ABC-1234")
+            @RequestParam
+            @NotBlank(message = "License plate is required")
+            @Pattern(regexp = "^[A-Z]{3}-\\d{4}$", message = "License plate must be in the format ABC-1234")
             String licensePlate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+
+            @RequestParam
+            @NotNull(message = "Date is required")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate date,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+
+            @RequestParam
+            @NotNull(message = "Time is required")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
             LocalTime time) {
 
         boolean allowed = picoYPlacaService.isVehicleAllowed(licensePlate, date, time);
